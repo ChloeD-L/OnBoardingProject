@@ -15,15 +15,12 @@ async function createAssistantName (){
             "type": "retrieval"
         }]
     })
-
     return assistant;
 }
 
 async function handleFunctioncall() {
     const assistant = await createAssistantName();
     const create = await createThread(assistant.id);
-
-
 }
 
 async function createThread(assistantId: string) {
@@ -39,7 +36,8 @@ async function createThread(assistantId: string) {
     console.log('Thread created:', thread);
     console.log('Message sent:', message);
     addMessage(thread.id, assistantId);
-    console.log('Message sent:');
+    console.log('Thread id check', thread.id);
+    console.log('Message sent cpmplete');
 }
 
 async function addMessage(threadId: string, assistantId: string) {

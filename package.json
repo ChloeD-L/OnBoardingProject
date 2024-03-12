@@ -1,6 +1,7 @@
 {
     "name": "practice1",
     "version": "1.0.0",
+    "type": "module",
     "description": "A Node.js project integrating OpenAI API and AWS services",
     "main": "app.js",
     "scripts": {

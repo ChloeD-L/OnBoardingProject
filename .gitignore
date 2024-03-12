@@ -1,0 +1,22 @@
+token*.json
+generateGoogleDocJsonFile.js
+!jest.config.js
+# *.d.ts
+node_modules
+
+yarn-error.log
+
+# credentials
+token*.json
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+memo
+.env
+dist/
+
+cdk.context.json
+
+functions/service/docx2md/__test__/results
