@@ -58,6 +58,8 @@ async function runConversation(city: string ) {
     tool_choice: "auto", // auto is default, but we'll be explicit
   });
   const responseMessage = response.choices[0].message;
+  console.log(responseMessage);
+  console.log(response);
 
   // Step 2: check if the model wanted to call a function
   const toolCalls = responseMessage.tool_calls;

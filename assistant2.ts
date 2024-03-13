@@ -37,7 +37,7 @@ const main = async () => {
 
     while (!isStop) {
         let userInput: string = await readInLine("Please enter your input: ") ;
-        if (userInput.toLocaleLowerCase() === "over") {
+        if (userInput.toLowerCase() === "over") {
             isStop = true;
         };
         const runId = await chatRound(assistant.id, thread.id, userInput);
