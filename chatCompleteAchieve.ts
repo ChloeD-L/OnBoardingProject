@@ -1,11 +1,16 @@
 import OpenAI from "openai";
 import dotenv from 'dotenv';
+import Express from 'express';
 import { ChatCompletionMessageParam } from "openai/resources";
 dotenv.config();
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
+
+const app = Express();
+const port = process.env.PORT || 3000; // 你可以指定一个端口号
+app.use(Express.json()); // 让 Express 能够解析 JSON 请求体
 
 
 function getNamePair(name: string): string {
@@ -37,6 +42,7 @@ console.log(getNamePair("Someone")); // 应返回 "Unknown"
 async function runConversation(name: string) {
     const messages: ChatCompletionMessageParam[] =[
         {role:"user", content: name},
+        {role:"system", content: "You can just reply user name pair in json format without making it a sentence."}
     ];
     const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
         {
@@ -64,11 +70,12 @@ async function runConversation(name: string) {
         messages: messages,
         tools: tools,
         tool_choice: "auto",
+        response_format: { type: "json_object" },
     });
 
     const responseMessage = response.choices[0].message;
 
-    console.log(responseMessage);
+    // console.log(responseMessage);
 
     const toolCalls = responseMessage.tool_calls;
     if (toolCalls) {
@@ -95,17 +102,47 @@ async function runConversation(name: string) {
             });
         }
 
+        console.log("messages - before second response:" ,messages);
+
+        console.log("responseMessage - before second response",responseMessage);
+
         const secondResponse = await openai.chat.completions.create({
             model: "gpt-3.5-turbo-0125",
             messages: messages,
+            // response_format: { type: "json_object" },
         });
-        return secondResponse.choices;
+
+        console.log("messages:" ,messages);
+
+        console.log("responseMessage: ",secondResponse.choices[0].message);
+
+
+        return secondResponse.choices[0].message;
     }
 
-    console.log(responseMessage);
-
-    return ;
+    return responseMessage;
 
 }
 
-runConversation("David Smith").then(console.log).catch(console.error);
+// 创建一个新的路由来处理 POST 请求
+app.post('/conversation', async (req, res) => {
+    const { name } = req.body;
+    try {
+        const conversationResponse = await runConversation(name);
+        res.json(conversationResponse);
+    } catch (error) {
+        // 类型检查
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            // 处理非 Error 类型的错误
+            res.status(500).json({ error: 'An unknown error occurred' });
+        }
+    }
+});
+
+
+// 启动服务器
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
