@@ -116,7 +116,6 @@ async function runConversation(name: string) {
 
         console.log("responseMessage: ",secondResponse.choices[0].message);
 
-
         return secondResponse.choices[0].message;
     }
 
