@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 token*.json
 generateGoogleDocJsonFile.js
 !jest.config.js
@@ -20,3 +21,71 @@ dist/
 cdk.context.json
 
 functions/service/docx2md/__test__/results
+=======
+# Dependency directories
+node_modules/
+
+# Build directories
+dist/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Packaging
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.seed
+*.pid.lock
+
+# Development environments
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor directories
+.idea/
+*.swp
+*.swo
+.vscode/
+*.sublime-workspace
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# Next.js build output
+.next
+
+# Nuxt.js build output
+.nuxt
+
+# VuePress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# Temporary folders
+.tmp
+.temp
+
+# TypeScript compiled files
+*.tsbuildinfo
+>>>>>>> 3cc06f2 (Add gitignore)
