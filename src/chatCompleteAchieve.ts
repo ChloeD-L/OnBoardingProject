@@ -63,13 +63,14 @@ async function startInteractiveLoop(): Promise<void> {
   
 
 // Program start here
-startInteractiveLoop();
+// startInteractiveLoop();
 
 
-const runConversation = async (name:string) : Promise<ChatCompletion.Choice['message']> =>{
+export const runConversation = async (name:string) : Promise<ChatCompletion.Choice['message']> =>{
     const messages: ChatCompletionMessageParam[] =[
         {role:"user", content: name},
-        {role:"system", content: "You can just reply user name pair in json format without making it a sentence."}
+        {role:"system", content: `You can just reply user name pair in json format without making it a sentence. 
+        Do not make a full sentence, answer name pair format. E.g Input: "David", Output format: "David Smith 大卫 史密斯"`}
     ];
     const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
         {
@@ -97,7 +98,7 @@ const runConversation = async (name:string) : Promise<ChatCompletion.Choice['mes
         messages: messages,
         tools: tools,
         tool_choice: "auto",
-        response_format: { type: "json_object" },
+        // response_format: { type: "json_object" },
     });
 
     const responseMessage = response.choices[0].message;
